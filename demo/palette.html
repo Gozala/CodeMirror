@@ -1,52 +1,118 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8"/>
-    <title>CodeMirror: CSS mode</title>
-    <link rel="stylesheet" href="../lib/codemirror.css"/>
-    <script src="../lib/codemirror.js"></script>
-    <script src="../mode/css/css.js"></script>
-    <script src="../addon/display/palette.js"></script>
-    <style>
-        .CodeMirror {background: #f8f8f8;}
-        .cm-palette {
-          text-decoration: underline;
-        }
-        .CodeMirror .cm-palette-hint {
-          display: inline-block;
-          box-sizing: border-box;
-          margin: 0 2px;
-          border-radius: 50%;
-          vertical-align: middle;
-          width: 10px;
-          height: 10px;
-          box-shadow: 0 0 2px;
-        }
+
+<title>CodeMirror: CSS Color palette Demo</title>
+<meta charset="utf-8"/>
+<link rel=stylesheet href="../doc/docs.css">
+
+<link rel="stylesheet" href="../lib/codemirror.css">
+<script src="../lib/codemirror.js"></script>
+<script src="../mode/css/css.js"></script>
+<script src="../addon/display/palette.js"></script>
+<style type="text/css">
+    .CodeMirror {background: #f8f8f8;}
+    .cm-palette {
+        text-decoration: underline;
+    }
+    .CodeMirror .cm-palette-hint {
+        display: inline-block;
+        box-sizing: border-box;
+        margin: 0 2px;
+        border-radius: 50%;
+        vertical-align: middle;
+        width: 10px;
+        height: 10px;
+        box-shadow: 0 0 2px;
+    }
     </style>
-    <link rel="stylesheet" href="../doc/docs.css">
-  </head>
-  <body>
-    <h1>CodeMirror: Palette Demo</h1>
-    <form><textarea id="code" name="code">
-.box {
-  color: #000;
-  border: 1px #ccc solid;
+<div id=nav>
+  <a href="http://codemirror.net"><img id=logo src="../doc/logo.png"></a>
+
+  <ul>
+    <li><a href="../index.html">Home</a>
+    <li><a href="../doc/manual.html">Manual</a>
+    <li><a href="https://github.com/marijnh/codemirror">Code</a>
+  </ul>
+  <ul>
+    <li><a class=active href="#">Palette</a>
+  </ul>
+</div>
+<article>
+<h2>CSS Color palette Demo</h2>
+<form><textarea id="code" name="code">
+fieldset {
+  padding: .35em .625em .75em;
+  margin: 0 2px;
+  border: 1px solid #c0c0c0;
 }
 
-code {
-  font-family: courier, monospace;
-  font-size: 80%;
-  color: #418A8A;
+@media print {
+  * {
+    color: #000 !important;
+    text-shadow: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+.form-control:focus {
+  border-color: grey;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.has-success .input-group-addon {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #3c763d;
+}
+.has-success .form-control-feedback {
+  color: #3c763d;
+}
+.has-warning .checkbox-inline {
+  color: #8a6d3b;
+}
+.has-warning .form-control {
+  border-color: #8a6d3b;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+.has-warning .form-control:focus {
+  border-color: #66512c;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #c0a16b;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #c0a16b;
+}
+.has-warning .input-group-addon {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #8a6d3b;
+}
+.has-warning .form-control-feedback {
+  color: #8a6d3b;
+}
+.has-error .help-block,
+.has-error .control-label,
+.has-error .radio,
+.has-error .checkbox,
+.has-error .radio-inline,
+.has-error .checkbox-inline {
+  color: #a94442;
+}
+.has-error .form-control {
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }
 </textarea></form>
+
     <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        lineNumbers: true,
-        paletteHints: true
-      });
-    </script>
+var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+  lineNumbers: true,
+    paletteHints: true
+});
+</script>
 
+<p>Uses
+the <a href="https://github.com/Gozala/CodeMirror/blob/addon/palette/addon/display/palette.js">palette</a>
+addon to visualise CSS color palette.</p>
 
-    <p>Demonstration of color hints.</p>
-  </body>
-</html>
+  </article>
