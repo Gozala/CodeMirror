@@ -92,18 +92,25 @@
     var doc = editor.getDoc();
     findMarks(editor, range).filter(isPaletteMark).forEach(clear);
 
+    var isFirstLine = true;
     editor.eachLine(range.from.line, range.to.line + 1, function(line) {
-      var match = line.text.match(COLOR_PATTERN)
-      if (match) {
+      var text = line.text;
+      var match = null;
+      var offset = 0;
+      while ((match = text.match(COLOR_PATTERN))) {
         var color = match[0];
-        var index = line.text.indexOf(color);
-        var column = index + color.length;
-        var bookmark = doc.setBookmark({line: doc.getLineNumber(line),
-                                        ch: column},
-                                       {widget: makeWidget(color),
-                                        insertLeft: true});
-        bookmark.isPaletteMark = true;
+        var index = text.indexOf(color) + color.length;
+        offset = offset + index;
+        text = text.substr(index);
+        if (!isFirstLine || offset >= range.from.ch) {
+          var bookmark = doc.setBookmark({line: doc.getLineNumber(line),
+                                          ch: offset},
+                                         {widget: makeWidget(color),
+                                          insertLeft: true});
+          bookmark.isPaletteMark = true;
+        }
       }
+      isFirstLine = false;
     });
   }
 
