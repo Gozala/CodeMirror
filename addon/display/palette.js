@@ -25,34 +25,8 @@
     return hint;
   }
 
-  function skipUntil(text, stream) {
-    while (!stream.match(text, false) && stream.next()) {
-      continue;
-    }
-  }
-
-  var paletteOverlay = {
-    token: function(stream, state) {
-      var match = stream.match(COLOR_PATTERN, false);
-      if (match) {
-        var color = match[0]
-        if (stream.match(color, true)) {
-          return PALETTE_TOKEN;
-        }
-        else {
-          skipUntil(color, stream);
-          return null;
-        }
-      }
-      else {
-        stream.skipToEnd();
-        return null;
-      }
-    }
-  };
-
-  function isPaletteMark(mark) { return mark.isPaletteMark }
-  function clear(mark) { return mark.clear() }
+  function isPaletteMark(mark) { return mark.isPaletteMark; }
+  function clear(mark) { return mark.clear(); }
 
   function findMarks(editor, range) {
     var markers = [];
@@ -99,15 +73,23 @@
       var offset = 0;
       while ((match = text.match(COLOR_PATTERN))) {
         var color = match[0];
-        var index = text.indexOf(color) + color.length;
+        var start = text.indexOf(color);
+        var index = start + color.length;
+        var before = text[start - 1];
+        var after = text[index];
         offset = offset + index;
         text = text.substr(index);
-        if (!isFirstLine || offset >= range.from.ch) {
-          var bookmark = doc.setBookmark({line: doc.getLineNumber(line),
-                                          ch: offset},
-                                         {widget: makeWidget(color),
-                                          insertLeft: true});
-          bookmark.isPaletteMark = true;
+
+        if ((!after || ",; )}".indexOf(after) >= 0) &&
+            (!before || "{(,: ".indexOf(before)) >= 0) {
+
+          if (!isFirstLine || offset >= range.from.ch) {
+            var bookmark = doc.setBookmark({line: doc.getLineNumber(line),
+                                            ch: offset},
+                                           {widget: makeWidget(color),
+                                            insertLeft: true});
+            bookmark.isPaletteMark = true;
+          }
         }
       }
       isFirstLine = false;
@@ -131,7 +113,6 @@
 
   CodeMirror.defineOption("paletteHints", false, function(editor, current, past) {
     if (current) {
-      editor.addOverlay(paletteOverlay);
       editor.on("change", batchUpdate);
       updatePaletteWidgets(editor, {
         from: {line: editor.firstLine(), ch: 0},
@@ -139,7 +120,6 @@
       });
     }
     else {
-      editor.removeOverlay(paletteOverlay);
       editor.off("change", batchUpdate);
       editor.getAllMarks().filter(isPaletteMark).forEach(clear);
     }
