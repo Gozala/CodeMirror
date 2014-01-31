@@ -114,10 +114,25 @@
     });
   }
 
+  function batchUpdate(editor, change) {
+    // If pasted more lines of code than was prior to that in buffer,
+    // change passed in will contain changes upto prior state. There
+    // for take last change from history that should contain all changes.
+    if (change.origin === "paste") {
+      var done = editor.getHistory().done;
+      change = done[done.length - 1].changes[0]
+    }
+
+    while (change) {
+      updatePaletteWidgets(editor, change);
+      change = change.next;
+    }
+  }
+
   CodeMirror.defineOption("paletteHints", false, function(editor, current, past) {
     if (current) {
       editor.addOverlay(paletteOverlay);
-      editor.on("change", updatePaletteWidgets);
+      editor.on("change", batchUpdate);
       updatePaletteWidgets(editor, {
         from: {line: editor.firstLine(), ch: 0},
         to: {line: editor.lastLine() + 1, ch: 0}
@@ -125,7 +140,7 @@
     }
     else {
       editor.removeOverlay(paletteOverlay);
-      editor.off("change", updatePaletteWidgets);
+      editor.off("change", batchUpdate);
       editor.getAllMarks().filter(isPaletteMark).forEach(clear);
     }
   });
