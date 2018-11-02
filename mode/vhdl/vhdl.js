@@ -2,14 +2,7 @@
 // Distributed under an MIT license: https://codemirror.net/LICENSE
 
 // Originally written by Alf Nielsen, re-written by Michael Zhou
-(function(mod) {
-  if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"));
-  else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror"], mod);
-  else // Plain browser env
-    mod(CodeMirror);
-})(function(CodeMirror) {
+export default (function(CodeMirror) {
 "use strict";
 
 function words(str) {

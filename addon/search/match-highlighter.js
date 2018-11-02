@@ -19,14 +19,7 @@
 // highlighting the matches. If annotateScrollbar is enabled, the occurences
 // will be highlighted on the scrollbar via the matchesonscrollbar addon.
 
-(function(mod) {
-  if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"), require("./matchesonscrollbar"));
-  else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror", "./matchesonscrollbar"], mod);
-  else // Plain browser env
-    mod(CodeMirror);
-})(function(CodeMirror) {
+export default (function(CodeMirror) {
   "use strict";
 
   var defaults = {

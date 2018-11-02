@@ -25,14 +25,7 @@
  * See demos/closetag.html for a usage example.
  */
 
-(function(mod) {
-  if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"), require("../fold/xml-fold"));
-  else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror", "../fold/xml-fold"], mod);
-  else // Plain browser env
-    mod(CodeMirror);
-})(function(CodeMirror) {
+export default (function(CodeMirror) {
   CodeMirror.defineOption("autoCloseTags", false, function(cm, val, old) {
     if (old != CodeMirror.Init && old)
       cm.removeKeyMap("autoCloseTags");

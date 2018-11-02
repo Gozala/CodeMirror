@@ -1,14 +1,7 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: https://codemirror.net/LICENSE
 
-(function(mod) {
-  if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"), require("../../mode/css/css"));
-  else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror", "../../mode/css/css"], mod);
-  else // Plain browser env
-    mod(CodeMirror);
-})(function(CodeMirror) {
+export default (function(CodeMirror) {
   "use strict";
 
   var pseudoClasses = {link: 1, visited: 1, active: 1, hover: 1, focus: 1,
